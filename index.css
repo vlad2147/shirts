@@ -1,0 +1,666 @@
+html, body{
+	height: 100%; /*Задал высоту*/
+}
+
+body{
+	background-color: #fcf5e6;
+	font-size: 16px; /*Размер шрифта (для всего сайта)*/
+	line-height: 1.42em; /*Высота строки(для всего сайта)*/
+	font-family: "Roboto", Arial, sans-serif; /*Шрифт(для всего сайта)*/
+	color: #212121; /*Цвет текста(для всего сайта)*/
+	-webkit-font-smoothing: antialiased; /*Просто надо(для хорошего отображения шрифтов в браузерах)*/
+	-moz-osx-font-smoothing: grayscale; /*Просто надо(для хорошего отображения шрифтов в браузерах)*/
+	margin: 0;
+}
+
+:root{ /*Переменные css*/
+	--yellow: #ffc92f; /*Переменная для желтого цвета*/
+	--black: #1b1b1b; /*Переменная для черного цвета*/
+	--red: #d82727; /*Переменная для красного цвета*/
+	--titlesFont: 'Yanone Kaffeesatz', Arial, sans-serif; /*Переменная для шрифта*/
+}
+
+ul{
+	margin: 0; /*Устраняем margin созданый браузером автоматически для списков(для всей страницы)*/
+	padding: 0; /*Устраняем padding созданый браузером автоматически для списков(для всей страницы)*/
+}
+
+ul > li{
+	list-style: none; /*Устраняем декорацию списков(для всей страницы)*/
+}
+
+.wrapper{
+	overflow: hidden; /*Контет обрезается, без возможности прокрутки*/
+	min-width: 1440px; /*Минимальная ширина обертки(= ширине контента, который мы хоти вместить)*/
+}
+
+.hero{
+	height: 100vh; /*100vh=на всю высоту видимой части сайта*/
+	min-height: 650px; /*Минимальная высота(для маленьких экранов). Если меньше, то появится скрол*/
+	background-image: url(img/bg/hero.jpg); /*Фоновая картинка*/
+	background-position: center center; /*Разместили фоновую картинку по центру*/
+	background-repeat: no-repeat; /*Запрещает картинке размножаться*/
+	background-size: cover; /*Позволяет картинке масштабироваться при уменшении окна браузера*/
+	position: relative; /*fade-slider абсолютно размеще по отношению к hero*/
+	margin-bottom: 130px; /*Внешний отступ снизу от фильтра*/
+}
+
+.header{
+	width: 1290px; /*Ширина(по макету)*/
+	margin: 0 auto; /*auto для того что при сужении или расширении окна шапко оставалась по центру*/
+	display: flex; /*Делаем блок flex*/
+	justify-content: space-between; /*Между элементами равный отступ(если два элемента, то они будут по краям).*/
+	align-items: center; /*Элементы будт распологаться по центру страницы(по поперчной оси)*/
+	padding-top: 27px; /*Внутренний отступ header от верха страницы(но похоже на margin-top)*/
+
+}
+
+.mail{
+	text-decoration: none; /*Убираем подчеркивание*/
+	text-align: center; /*Выравниваем тест по центру*/
+	color: inherit; /*Цвет наследуется у родителя(body)*/
+}
+
+.mail__title{
+	margin-bottom: 3px; /*Внешний отступ(снизу) между словами*/
+}
+
+.mail__content{
+	background-color: var(--black); /*Цвет фона*/
+	color: var(--yellow); /*Цвет текста*/
+	padding: 7px 10px; /*Внутренний отсту сверху/снизу 5, слева/справа 10*/
+}
+
+.hero__content{
+	position: absolute; /*fade-slider абсолютно размеще по отношению к hero*/
+	top: 50%; /*Позиционируем слайдер по центру*/
+	left: 50%; /*Позиционируем слайдер по центру*/
+	transform: translate(-50%, -50%); /*Что бы по центру был не угол блока, а сам блок*/
+	width: 1140px; /*Ширина слайдера (по макету)*/
+	height: 72%;
+
+}
+
+.fade-slider{
+	width: 100%; /*Ширина слайдера*/
+	height: 100%; /*Высота слайдера*/
+}
+
+.sidebar{
+	width: 75px;
+	position: absolute; /*sidebar абсолютно размещен по отношению к hero*/
+	left: 0; /*Позиционируем элемент*/
+	top: 0; /*Позиционируем элемент*/
+	bottom: 0; /*Позиционируем элемент*/
+	background-color: #212121; /*Цвет фона*/
+	box-sizing: border-box; /*Запрещает изменение размеров блоков изза padding и border*/
+	display: flex; /*Даем блоку свойство flex*/ /*Что бы выровнять элементы*/
+	align-items: center; /*Выравниваем контент по центру(по вертикали)*/
+	justify-content: center; /*Выравниваем контент по центру(по горизонтали)*/
+	flex-direction: column; /*Выстраиваем элементы в колонку*/
+	transition: width 0.3s; /*Придаем открытию сайдбара пласвность(изменение параметра width будет изменяться 1 сек)*/
+}
+
+.sidebar--opened{
+	width: 325px; /*Ширина открытого сайдбара*/
+	padding: 0 3% 0 4%; /*Внутренний отступ от границ бокового меню до текста, лого и крестика*/
+}
+
+.sidebar__menu{
+	position: absolute; /*sidebar абсолютно размещен по отношению к hero*/
+	left: -400px; /*Скрываем текст(не display: none; т.к. в будющем ужно будет для анимации появления)*/
+	transition: 0.4s; /*Список будет появляться после появления сайдбара с задержкой в 0.1s*/
+} 
+
+.sidebar--opened .sidebar__header{
+	display: flex; /*Состояние меню при отрытом сайдбаре*/
+}
+
+.sidebar--opened .sidebar__menu{
+	left: 0; /*Возвращаем список при открытом сайдбаре*/
+	width: 100%; /*Растягиваем на всю ширину блок(отцентрируем по горизонтали)*/
+	text-align: center; /*Выравниваем текст по центру*/
+}
+
+.sidebar__header{
+	display: none; /*Если сайдбар закрыт то элементы скрываются*/
+	position: absolute; /*sidebar__header абсолютно размещен по отношению к hero*/
+	top: 29px; /*Позиционируем элемент*/
+	left: 0; /*Позиционируем элемент*/
+	right: 0; /*Позиционируем элемент*/
+	justify-content: center; /*Выравниваем контент внутри sidebar__header*/
+}
+
+.sidebar__close{
+	position: absolute; /*sidebar__close абсолютно размещен по отношению к hero*/
+	top: -4px; /*Позиционируем элемент*/
+	right: 23px; /*Позиционируем элемент*/
+}
+
+.sidebar__hamburger-icon{
+	width: 29px; /*Ширина иконки*/
+	height: 29px; /*Высота иконки*/
+	fill: var(--yellow); /*Заливка иконки желтым цветом*/
+}
+
+.sidebar__hamburger{
+	display: block;                           /*???*/
+	position: absolute; /*sidebar__hamburger абсолютно размещен по отношению к hero*/
+	top: 27px; /*Позиционируем элемент*/
+	left: 50%; /*По зиционируем элемент четко по центру (по горизонтали)*/
+	transform: translate(-50%); /*По зиционируем элемент четко по центру (по горизонтали)*/
+}
+
+.sidebar--opened .sidebar__hamburger{
+	display: none; /*Когда сайдбар открыт кноки не бужет видно*/
+}
+
+.sidebar__close-icon{
+	width: 29px; /*Ширина иконки*/
+	height: 29px; /*Высота иконки*/
+	fill: var(--yellow); /*Заливка желтым цыетом*/
+}
+
+.side-menu__item{
+	margin-bottom: 27px; /*Внешний отступ элемениов списка друг от друга*/
+}
+
+.side-menu__item:last-child{
+	margin-bottom: 0px; /*Убираем внешеий отступ для последнего элемента списка*/
+}
+
+
+.side-menu__link{
+	font-size: 20px; /*Размер текста*/
+	color: var(--yellow); /*Цвет текста*/
+	font-weight: 400; /*Жирность теста*/
+	font-family: var(--titlesFont); /*Шрифт*/
+	text-transform: uppercase; /*Делает все буквы заглавными*/
+	text-decoration: none; /*Убираем тестовую декорацию*/
+}
+
+.side-menu__link:hover{
+	color: var(--red); /*Цвет текста при наведении на ссылку*/
+}
+
+.fade-slider{
+	position: relative; /*fade-slider_item абсолютно расположен относительно fade-slider*/
+}
+
+.fade-slider__item{
+	background-position: center center; /*Разместили фоновую картинку по центру*/
+	background-repeat: no-repeat; /*Запрещает картинке размножаться*/
+	background-size: contain; /*Что бы внутри блока фоновая картинка тоже сжималась или раширялась пропорционально всей странице*/
+	height: 100%; /*Высота на всю высоту родителя(fade-slider = 72%)*/
+	position: absolute; /*fade-slider_item абсолютно расположен относительно fade-slider*/
+	top: 0; /*Позиционируем элемент*/
+	left: 0; /*Позиционируем элемент*/
+	width: 100%; /*Растягиваем на всю ширину блока*/
+	height: 100%; /*Растягиваем на всю высоту блока*/
+	opacity: 0; /*Прозрачный элемент*/
+	transition: opacity 0.3s; /*Плавность перехода с прозрачности до видимоси*/
+}
+
+.fade-slider__item--visible{
+	opacity: 1; /*Не прозрачный*/
+}
+
+.fade-slider__item--style-tshirts{
+	background-image: url(img/content/hero/slider_pic_1.png); /*Фоновая картинка*/
+}
+
+.fade-slider__item--style-games{
+	background-image: url(img/content/hero/slider_pic_2.png); /*Фоновая картинка*/
+}
+
+.fade-slider__item--style-presents{
+	background-image: url(img/content/hero/slider_pic_3.png); /*Фоновая картинка*/
+}
+
+ .fade-slider__text--tshirts{
+	position: absolute; /*fade-slider__text--tshirts абсолютно расположен относительно .fade-slider*/
+	left: 50%; /*Позиционируем тест по центру*/
+	top: 50%; /*Позиционируем тест по центру*/
+	transform: translate(-148%, -52%); /*Распологаем текст там где нам надо*/
+}
+
+.fade-slider__text--games{
+	position: absolute; /*fade-slider__text--games абсолютно расположен относительно .fade-slider*/
+	left: 50%; /*Позиционируем тест по центру*/
+	bottom: 0%; /*Позиционируем тест по центру*/
+	transform: translate(-46%, 8%); /*Распологаем текст там где нам надо*/
+	white-space: nowrap; /*Запрещаем тексту переноситься*/
+}
+
+.fade-slider__text--presents{
+	position: absolute; /*fade-slider__text--games абсолютно расположен относительно .fade-slider*/
+	left: 0; /*Позиционируем тест по центру*/
+	bottom: 0; /*Позиционируем тест по центру*/
+	transform: translate(-1%, -25%); /*Распологаем текст там где нам надо*/
+	width: 100%; /*Растянул текст на всю ширину*/
+}
+
+.lined-text{
+	font-family: 'Alegreya Sans SC', Arial, sans-serif; /*Задаем шрифт*/
+	color: #fff; /*Цвет текста*/
+	font-size: 63px; /*Размер текста*/
+	text-transform: uppercase; /*Делает все буквы заглавными*/
+	line-height: 1; /*Высота строки*/
+	display: flex; /*Даем блоку свойство flex*/
+	flex-direction: column; /*Выстраиваем слова в колонку*/
+	align-items: flex-start; /*Прижимаем слова к левому краю блока*/
+}
+
+.lined-text__word--tshirts{
+	background-color: #212121; /*Цвет фона у текста*/
+	padding: 0 17px 8px; /*Отступы внутренние от границ*/
+	margin-top: -7px; /*Внешний отступ снизу слов друг от друга*/
+}
+
+.lined-text__word--tshirts:nth-child(2n){
+	margin-left: 8px; /*Каждый второй ребенок блока(родителя) lined-text__word будет смещаться влево на 8 пикселей*/
+}
+
+.lined-text__word--games{
+	background-color: #212121; /*Цвет фона у текста*/
+	margin-top: -7px; /*Внешний отступ снизу слов друг от друга*/
+	padding: 0 17px 8px; /*Отступы внутренние от границ*/
+}
+
+.lined-text__word--games:first-child{
+	margin-left: 117px; /*Внешний отступ слева для первого ребенка*/
+	margin-right: 125px; /*Внешний отступ справа для первого ребенка*/
+}
+
+.lined-text__word--presents{
+	background-color: #212121; /*Цвет фона у текста*/
+	margin-top: -7px; /*Внешний отступ снизу слов друг от друга*/
+	padding: 0 17px 8px; /*Отступы внутренние от границ*/
+}
+
+.lined-text__word--presents:first-child{
+	margin-left: 37px; /*Внешний отступ слева для первого ребенка*/
+	font-size: 80px; /*Шрифт для первого ребенка*/
+}
+
+.lined-text__word--color-yellow{
+	color: var(--yellow); /*Цвет текста*/
+}
+
+.container{
+	margin: 0 auto; /*Убираем margin для container сверху, а по бокам auto, что бы при сжатии станицы все отображалось правильно*/
+	width: 1300px; /*Устанавливаем ширину, что бы весь контент был одной ширины*/ 
+}
+
+.filter{
+	display: flex; /*Даем блоку свойство flex*/
+	justify-content: center; /*Выравниваем контент по центру(по горизонтали)*/
+	align-items: center; /*Выравниваем контент по центру(по вертикали)*/
+	margin-bottom: 100px; /*Внешний оступ от футболок*/
+}
+
+.filter__item{
+	margin-right: 40px; /*Внешний отступ спправа от кнопок фильтрации продукции*/
+}
+
+.filter__item:last-child{
+	margin-right: 0; /*Устраняем ненужный отступ у последнего элемента*/
+}
+
+.filter__link{
+	text-decoration: none; /*Устраняем тестовую декорацию*/
+	text-transform: uppercase; /*Все буквы написаны CapsLock*/
+	display: inline-block; /*Придаем строчному элементу блочное поведение, так как строчному элементу нельзя задвать padding*/
+	padding: 9px 21px; /*Внутренние отступы для кнопки*/
+	color: var(--black); /*Цвет*/
+	font-size: 24px; /*Размер текста*/
+	font-weight: 700; /*Жирность текста*/
+	font-family: var(--titlesFont); /*Шрифт*/
+}
+
+.filter__link:hover{
+	color: var(--red); /*Цвет ссылки при наведении курсором*/
+}
+
+.filter__item--active .filter__link{
+	color: var(--yellow); /*Цвет кнопки в активном состоянии*/
+	background-color: var(--black); /*Цвет фона кнопки в активном состоянии*/
+}
+
+.products{
+	margin-bottom: 150px; /*Внешний отступ снизу от следующей секции(collection)*/
+}
+
+.products__list{
+	display: flex; /*Даем блоку свойство flex*/
+	flex-wrap: wrap; /*Если элемент не помещается, то он переносится на другую строчку*/
+	margin-left: -27px; /*Чтобы поместились футболки(если этой строчки не будет то большая футболка не поместиться изза margin-left: 27px у products__item)*/
+}
+
+.products__item{
+	width: 302px; /*Ширина блока*/
+	height: 386px; /*Высота блока*/
+	background-color: var(--yellow); /*Цвет фона*/
+	margin-bottom: 35px; /*Внешние отступы(снизу) блоков с футболками друг от друга*/
+	margin-left: 27px;  /*Внешние отступы(слева) блоков с футболками друг от друга*/
+	position: relative; /*products__price абсолютно споциционирован относительно products__item*/
+}
+
+.products__item--color-black{ /*Идентификатор*/
+	background-color: #232323; /*Цвет фона для идентификатора*/
+}
+
+.products__item--size-double{ /*Идентификатор*/
+	width: 630px; /*Ширина блока с идентификатором*/
+	height: 544px; /*Высота блока с идентификатором*/
+}
+
+.products__item:hover .products__desc{ /*Идентификатор*/
+	transform: translateY(0%); /*При наведении на блок с футболкой products__desc поднимется наверх*/
+}
+
+.products__price{
+	position: absolute; /*products__price абсолютно споциционирован относительно products__item*/
+	top: 18px; /*Размещаем элемент*/
+	left: -9px; /*Размещаем элемент*/
+	width: 126px; /*Ширина блока*/
+	border-bottom-width: 45px; /*Делаем геометрическую фигуру(цена) с помощью border*/
+	border-bottom-style: solid; /*Делаем геометрическую фигуру(цена) с помощью border*/
+	border-bottom-color: #232323; /*Делаем геометрическую фигуру(цена) с помощью border*/
+	border-left-width: 5px; /*Делаем геометрическую фигуру(цена) с помощью border*/
+	border-left-style: solid; /*Делаем геометрическую фигуру(цена) с помощью border*/
+	border-left-color: transparent; /*Делаем геометрическую фигуру(цена) с помощью border*/ /*Прозрачный цвет*/
+	border-right-width: 2px; /*Делаем геометрическую фигуру(цена) с помощью border*/
+	border-right-style: solid; /*Делаем геометрическую фигуру(цена) с помощью border*/
+	border-right-color: transparent; /*Делаем геометрическую фигуру(цена) с помощью border*/ /*Прозрачный цвет*/
+	transform: rotate(-181deg); /*Делаем геометрическую фигуру(цена) с помощью border*/ /*Повернули элемент на 181 градус*/
+}
+
+.products__item--color-black .products__price{ /*Идентификатор*/
+	border-bottom-color: var(--yellow); /*Цвет border для products__price при идентификаторе products__item--color-black*/
+}
+
+.products__item--color-black .products__price-amount{
+	color: #212121; /*Цвет products__price-amount(цены) при идентификаторе .products__item--color-black*/
+}
+
+.products__price-amount{
+	transform: rotate(181deg); /*Повернули текст(цена) обратно на 181 градус(так как мы поворачивали блок products__price)*/
+	font-size: 30px; /*Размер текста*/
+	font-weight: 700; /*Жирность теста*/
+	color: #fcf5e6; /*Цвет теста*/
+	font-family: var(--titlesFont); /*Шрифт*/
+	position: absolute;																				 /*???*/
+	top: 9px; /*Позионируем элемент(Изза того что мы повернули блок products__price верх стал внизу)*/
+	right: 30px; /*Позионируем элемент(Изза того что мы повернули блок products__price право столо лево)*/
+}
+
+.products__content{
+	position: relative; /*products__desc абсолютно споциционирован относительно products__content*/
+	height: 100%; /*Высота на всю высоту блока*/
+	display: flex; /*Даем блоку свойство flex*/
+	align-items: center; /*Выравниваем контент по центру(по вертикали)*/
+	justify-content: center; /*Выравниваем контент по центру(по горизонтали)*/
+	overflow: hidden; /*Контет обрезается, без возможности прокрутки*/
+}
+
+.products__desc{
+	position: absolute; /*products__desc абсолютно споциционирован относительно products__content*/
+	bottom: 0; /*Позиционируем элемент*/
+	left: 0; /*Растянули элемент на всю ширину*/ /*Позиционируем элемент*/
+	right: 0; /*Растянули элемент на всю ширину*/ /*Позиционируем элемент*/
+	padding: 23px 30px; /*Внутренние отступы кнопки и текста от краев*/
+	background-color: rgba(35, 35, 35); /*Цвет*/
+	opacity: 0.8; /*Прозрачност*/
+	font-size: 15px; /*Размер текста*/
+	color: #fff; /*Цвет текста*/
+	font-weight: 400; /*Жирность теста*/
+	display: flex; /*Даем блоку свойство flex*/
+	flex-direction: column; /*Элементы расположены в колонку. Теперь главная ось становится вертикальной, а поперечная - горизонтальной.*/
+	align-items: center; /*Выравниваем контент по центру(по горизонтали, т.к. перед этим мы прописали flex-direction: column;)*/
+	transform: translateY(100%); /*В обычном состоянии products__desc спрятан*/
+	transition: transform 0.3s; /*Поднятие/опускание длиться 3сек*/
+}
+
+.products__img{
+	display: block; /*Ограничили картинку в размерах(что бы она не вылазила за границы своего блока-родителя)*/
+	max-width: 90%; /*Ограничили картинку в размерах(что бы она не вылазила за границы своего блока-родителя)*/
+	max-height: 100%; /*Ограничили картинку в размерах(что бы она не вылазила за границы своего блока-родителя)*/
+}
+
+.products__desc-text{
+	text-align: center; /*Выравниваем тест по центру*/
+	margin-bottom: 18px; /*Отступ снизу(от кнопки)*/
+}
+
+.btn{
+	text-decoration: none; /*Устраняем тестовую декорацию*/
+	text-transform: uppercase; /*Все буквы написаны CapsLock*/
+	display: inline-block; /*Придаем строчному элементу блочное поведение, так как строчному элементу нельзя задвать padding*/
+	padding: 9px 21px; /*Внутренние отступы для кнопки*/
+	color: var(--yellow); /*Цвет текста*/
+	font-size: 24px; /*Размер текста*/
+	font-weight: 700; /*Жирность теста*/
+	font-family: var(--titlesFont); /*Шрифт*/
+	background-color: var(--black); /*Цвет фона кнопки*/
+}
+
+.btn:hover{ 
+	background-color: var(--red); /*Цвет кнопки при наведении курсором*/
+	color: #fff; /*Цвет текста кнопки при наведении курсором*/
+}
+
+.collection{
+	margin-bottom: 135px; /*Отступ снизу от секции footer*/
+}
+
+.collection__list{
+	display: flex; /*Даем блоку свойство flex*/ /*Элементы списка выстраиваются в ряд*/
+}
+
+.collection__item{
+	min-height: 474px; /*Минимальная высота блоков(минимаоьная, потому что описание может стать длиннее)*/
+	flex: 1; /*Сделали блоки одинаковыми*/
+	overflow: hidden; /*Контет обрезается, без возможности прокрутки*/
+	margin-right: 30px; /*Отступ справа от 'Женской коллекции'*/
+	background-image: url(img/bg/pattern.png); /*Фоновая картинка(паьтерн)*/
+	background-position: center center; /*Позиционирование фоновой картинки*/
+	/*background-repeat: no-repeat;*/ /*Это тут не надо так как это паттерн, а он должен повторяться*/
+	background-size: 850px; /*Уменьшили размер картинки(паттерна)*/
+	position: relative; /*collection__item:before абсолютно споциционирован относительно collection__item*/
+}
+
+.collection__item:before{   /* Псевдоэлемент*/
+	content: ""; /*Обязательная строчка для псевдоэлемента*/
+	display: block; /*Для того что бы мы могли задавать размеры для псевдоэлемента*/
+	position: absolute; /*collection__item:before абсолютно споциционирован относительно collection__item*/
+	height: 176%; /*Высота парня и девушки*/
+	width: 60%; /*Ширина парня*/
+	top: -17%; /*Позицинирование парня*/
+	left: -18%; /*Позицинирование парня*/
+	background-size: contain; /*Указываем картинке, что бы она целиком помещалась в блок*/
+	background-position: center center; /*Позиционирование фоновой картинки*/
+	background-repeat: no-repeat; /*Запрещает картинке размножаться*/
+}
+
+.collection__item--type-man:before{ /*Идентификатор псевдоэлемента*/
+	background-image: url(img/collections/collection_man.png); /*Фоновая картинка(парень)*/
+}
+
+.collection__item--type-woman:before{ /*Идентификатор псевдоэлемента*/
+	background-image: url(img/collections/collection_woman.png); /*Фоновая картинка(девушка)*/
+	top: -32%; /*Позицинирование девушку*/
+	left: -25%; /*Позицинирование девушку*/
+	width: 80%; /*Ширина девушки*/
+}
+
+
+.collection__item:last-child{
+	margin-right: 0; /*Убираем ненужный отступ спправа у 'Женской коллекции'*/
+}
+
+.collection__link{
+	display: block; /*Придаем ссылкам блочное поведение*/
+	padding: 74px 13% 74px 44%; /*Внутренние отступы*/ /*Справа и слева в % что бы при изменении ширины блока, больше вероятность что ссылка будет хорошо отображаться*/
+	text-decoration: none; /*Устраняем текстовую девкорацию*/
+	color: var(--black); /*Цвет текста*/
+	font-size: 15px; /*Размер текста*/
+	font-family: "Roboto"; /*Шрифт*/
+	font-weight: 400; /*Жирность теста*/
+	position: relative; /*Что бы загораласть кнопка при наведении на заголовок*/                 /*???*/
+	height: 100%; /*Растянули ссылку на всю высоту блока*/
+	box-sizing: border-box; /*Запрещает изменение размеров блоков изза padding и border*/
+}
+
+.collection__link:hover .btn{
+	background-color: var(--red); /*Цвет кнопки при наведении курсора на collection__link(не обязательно на кнопку)*/
+	color: #fff; /*Цвет текста кнопки при наведении курсора на collection__link(не обязательно на кнопку)*/
+}
+
+.collection__title{
+	font-size: 70px; /*Размер текста*/
+	color: var(--black); /*Цвет текста*/
+	font-weight: 700; /*Жирность теста*/
+	font-family: var(--titlesFont); /*Шрифт*/
+	line-height: 1; /*Высота строки(одинарная)*/
+	text-transform: uppercase; /*Все буквы написаны CapsLock*/
+	margin-top: 0; /*Убрали внешний отступ сверху(который задает по умолчанию браузер) для заголовка*/
+	margin-bottom: 11px; /*Внешний отступ снизу*/
+}
+
+.collection__desc{
+	margin-bottom: 28px; /*Внешний отступ от текста до кнопки "Посмотреть"*/
+}
+
+.footer{
+	margin-bottom: 115px; /*Внешний отступ от навигации до соц сетей*/
+}
+
+.footer__container{
+	width: 1105px; /*Ширина container для footer*/
+}
+
+.site-menu{
+	margin-bottom: 118px; /*Внешний отступ снизу от панелек*/
+}
+
+.site-menu__section{
+	display: flex; /*Даем блоку свойство flex*/ /*Колонки выстраиваются в ряд*/
+	justify-content: space-between; /*Делаем между колонками одинакрвый отступ*/
+}
+
+.site-menu__col{
+	margin-right: 20px; /*Внешний отступ справа между колонками*/
+}
+
+.site-menu__col:last-child{
+	margin-right: 0px; /*Убираем внешний отступ справа для последней колонки*/
+}
+
+.site-menu__title{
+	font-size: 24px; /*Размер текста*/
+	font-weight: 700; /*Жирность теста*/
+	font-family: var(--titlesFont); /*Шрифт*/
+	color: var(--black); /*Цвет текста*/
+	text-transform: uppercase; /*Все буквы написаны CapsLock*/
+	margin-bottom: 24px; /*Внешний отступ снизу от заголовка до списка*/
+}
+
+.site-menu__item{
+	margin-bottom: 15px; /*Внешний отступ снизу между строчками списка*/
+}
+
+.site-menu__link{
+	text-decoration: none; /*Устраняем тестовую декорацию*/
+	color: #737373; /*Цвет текста*/
+	font-size: 15px; /*Размер текста*/
+}
+
+.site-menu__link:hover{ 
+	color: var(--red); /*Цвет ссылки при наведении курсором*/
+}
+
+.site-menu__text{
+	font-size: 15px; /*Размер текста*/
+	color: var(--black); /*Цвет текста*/
+	margin-bottom: 32px; /*Внешний отступ снизу между адресом и контактами*/
+}
+
+.site-menu__text-row{
+	text-decoration: none; /*Устраняем тестовую декорацию*/
+	font-size: 15px; /*Размер текста*/
+	color: var(--black); /*Цвет текста*/
+	display: block; /*Придаем ссылкам блочное поведение*/ /*Ссылка с e-mail переносится на следующую строку*/
+	margin-bottom: 5px; /*Внешний отступ снизу между контактами*/
+}
+
+.site-menu__text-row:hover{
+	color: var(--red); /*Цвет ссылки при наведении курсором*/
+}
+
+.extras{
+	display: flex; /*Придаем ссылкам блочное поведение*/ /*Панельки выстраиваются в ряд*/
+	margin-bottom: 95px; /*Внешний отступ сверху от нижней границы страницы*/
+}
+
+.extras__col{
+	margin-right: 20px; /*Внешний отступ между панельками*/
+	flex: 1; /*Устанавливаем элементам одинаковый размер*/
+}
+
+.extras__col:last-child{
+	margin-right: 0px; /*Убираем внешний отступ справа для второй панельки*/
+}
+
+.extras__best{
+	display: block; /*Даем блоку(ссылке) свойство flex*/ /*Для того что бы к ссылке применились padding*/
+	background-color: #232323; /*Цвет фона*/
+	color: #fff; /*Цвет текста*/
+	font-size: 50px; /*Размер текста*/
+	font-weight: 700; /*Жирность текста*/
+	font-family: var(--titlesFont); /*Шрифт*/
+	text-align: center; /*Выравниваем текст по центру*/
+	text-decoration: none; /*Убираем тестовую декорацию*/
+	text-transform: uppercase; /*Все буквы написаны CapsLock*/
+	padding: 50px 10%; /*Внутренние отступы от границ панельки*/
+	line-height: 1; /*Высота строки(одинарная)*/
+}
+
+.extras__col-socials{
+	height: 100%; /*Растягиваем на всю высоту блока-родителя*/
+	background-image: url(img/bg/pattern.png); /*Фоновая картинка*/
+	background-position: center center; /*Позиционирование фоновой картинки*/
+	background-size: 700px; /*Уменьшили размер картинки(паттерна)*/
+	position: relative; /*collection__item:before абсолютно споциционирован относительно collection__item*/
+	display: flex; /*Даем блоку свойство flex*/ /*Иконки выстраиваются в ряд*/
+	align-items: center; /*Выравниваем иконки по вертикали по центру*/
+	justify-content: center; /*Выравниваем иконки по горизонтали по центру*/
+}
+
+.socials{
+	display: flex; /*Придаем ссылкам блочное поведение*/ /*Иконки выстраиваются в ряд*/
+}
+
+.socials__item{
+	margin-right: 50px; /*Внешние отступы справа от иконок соц-сетей*/
+}
+
+.socials__item:last-child{
+	margin-right: 0px; /*Убираем внешний отступ справа для последней иконки*/
+}
+
+.socials__link{
+	width: 38px; /*Ширина иконки*/
+	height: 38px; /*Высота иконки*/
+	display: block; /*Придаем ссылкам блочное поведение*/ /*Чтобы применились размеры*/
+}
+
+.socials__link:hover .socials__icon{ 
+	fill: var(--red); /*При наведении на ссылку у иконки будет меняться цвет заливки границ на красный*/
+}
+
+.socials__icon{
+	width: 100%; /*100% от ширины родителя(socials__link = 38px)*/
+	height: 100%; /*100% от высоты родителя(socials__link = 38px)*/
+}
+
